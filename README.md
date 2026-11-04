@@ -1,47 +1,66 @@
-# CareDose
+<h1 align="center">CareDose</h1>
 
-**Medication reminders for you and the people you care for.**
+<p align="center"><strong>A calmer way to stay on top of medication.</strong></p>
 
-![React Native](https://img.shields.io/badge/React%20Native-Mobile-61DAFB)
-![Expo](https://img.shields.io/badge/Expo-SDK%2058-000020)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6)
-![State](https://img.shields.io/badge/State-React%20Context-087EA4)
-![Storage](https://img.shields.io/badge/Storage-SQLite%20%2B%20SQLCipher-003B57)
-![Backend](https://img.shields.io/badge/Backend-Supabase-3ECF8E)
+<p align="center">
+  <img src="https://img.shields.io/badge/React%20Native-61DAFB?logo=react&logoColor=black" alt="React Native">
+  <img src="https://img.shields.io/badge/Expo-1C2024?logo=expo&logoColor=white" alt="Expo">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=black" alt="Supabase">
+  <img src="https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white" alt="SQLite">
+</p>
 
-CareDose is a mobile portfolio project built around a common caregiving problem: keeping several medication schedules straight and knowing what has already been taken. It puts the day’s doses, reminders, and recent history in one place, with a separate schedule for each person.
+<p align="center">
+  A medication reminder app for individuals and family caregivers.<br>
+  Built to make daily schedules easier to follow, one dose at a time.
+</p>
 
-## ✨ Key features
+---
 
-- 🗓️ **Flexible schedules** — set a start time, repeat interval, and treatment duration, with optional dose and care notes.
-- 🔔 **Local reminders** — receive scheduled notifications offline and choose **Taken / Given** or **Remind me later**.
-- 👥 **Patient profiles** — switch between personal and family schedules under one account.
-- 📊 **Daily progress and history** — see what’s due and review recent taken, late, missed, and snoozed doses.
-- ☁️ **Offline edits and sync** — save changes locally, then retry Supabase sync when connected.
-- 🌙 **Display preferences** — choose a light, dark, or system theme, plus a preferred clock format.
+## The idea
 
-## 📱 UI showcase
+Managing medication becomes harder when there are multiple schedules and people to care for. CareDose brings those schedules into one clear daily view, with reminders and a history of what happened after each dose was due.
 
-| Daily schedule | Add medication | Lock-screen reminder |
-| :---: | :---: | :---: |
-| <img src="screenshots/today.jpg" width="230" alt="Today dashboard showing dose progress and medication cards"> | <img src="screenshots/add-medication.jpg" width="230" alt="Add medication form showing name, dose, unit, and form"> | <img src="screenshots/lock-screen-reminder.jpg" width="300" alt="iPhone medication reminder with Taken and Remind me later actions"> |
+## A look inside
 
-## 🧩 Architecture
+<table>
+  <tr>
+    <th>Today</th>
+    <th>Add medication</th>
+    <th>Reminder</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/today.jpg" width="240" alt="Daily care dashboard showing medication progress"></td>
+    <td align="center"><img src="screenshots/add-medication.jpg" width="240" alt="Medication details form"></td>
+    <td align="center"><img src="screenshots/lock-screen-reminder.jpg" width="360" alt="iPhone medication notification with quick actions"></td>
+  </tr>
+  <tr>
+    <td align="center">See the day’s doses and progress</td>
+    <td align="center">Create a schedule around the care plan</td>
+    <td align="center">Take action from a local notification</td>
+  </tr>
+</table>
 
-Expo Router screens handle navigation and presentation. React Context providers coordinate account, patient, medication, and reminder state. Storage, sync, and notification scheduling live in separate service modules.
+## What it does
 
-- **Device scheduling.** CareDose hands scheduled notifications to iOS or Android, so delivery does not require the app to stay open or online. Long schedules use a rolling queue that refills when the app opens.
-- **Local-first writes.** Custom native builds store care records and pending edits in SQLCipher. Supabase Auth identifies the account, and Postgres row-level security limits cloud records to their owner. Conflicting edits are flagged and the pending local edit is preserved.
+- **Daily overview** — see scheduled doses, progress, and the active patient’s care plan.
+- **Medication schedules** — set a start time, repeat interval, and duration, with optional dosage and instructions.
+- **Reminders** — receive local notifications and mark a dose taken or snooze it.
+- **Caregiver profiles** — keep schedules for multiple people under one account.
+- **Dose history** — review on-time, late, missed, and snoozed events.
+- **Offline changes** — save care records locally and retry cloud sync when connected.
+- **Personal preferences** — choose appearance, time format, sound, and snooze duration.
 
-## ▶️ Run locally
+## How it’s built
 
-This repository is the portfolio showcase. Running the app requires access to the private application source, Node.js, and a configured Supabase test project.
+**Expo Router** organizes the app into screens and navigation flows. **React Context** coordinates authentication, patients, medications, and preferences, while dedicated modules handle storage, schedules, and notifications.
 
-```bash
-git clone "$CAREDOSE_SOURCE_URL" caredose
-cd caredose
-npm ci
-npm start
-```
+Custom native builds store local care records with **SQLite and SQLCipher**. **Supabase Auth and Postgres** provide account identity and account-scoped sync through row-level security. Each device schedules its own notifications, so reminders can be delivered offline.
 
-Set `CAREDOSE_SOURCE_URL` to the private source URL and configure `.env.local` from the source repository’s example before starting. Press **a** for an Android emulator or **i** for an iOS Simulator on macOS. Use a custom development build to test SQLCipher and a physical device to verify notification delivery.
+Changes to different records can merge during sync. When devices edit the same record, the app preserves the local change and flags the conflict. A conflict-resolution interface and full two-device verification remain open work.
+
+## Project status
+
+CareDose is a personal beta and portfolio case study. The screenshots show the iPhone beta. The Supabase schema is deployed, while cross-device sync and offline recovery still need end-to-end verification.
+
+This repository contains the showcase and screenshots. The application source is private. The app is a reminder tool for an existing care plan and does not replace instructions from a care team.
